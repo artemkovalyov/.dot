@@ -1,24 +1,10 @@
-# Here's how my modmap looks like
-#-----------------------------------------------------------
-# shift       Shift_L (0x32),  Shift_R (0x3e)
-# lock
-# control     Control_L (0x25)
-# mod1        Alt_L (0x40),  Alt_L (0xcc)
-# mod2        Meta_L (0x85),  Meta_L (0xcd)
-# mod3        Hyper_L (0x42),  Hyper_L (0xcf)
-# mod4        Super_R (0x6c),  Super_L (0xce)
-# mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
-#-----------------------------------------------------------
-# Layour swithc is double shifts
-# Compose (Multi-key) is right Right Control
-
 default partial modifier_keys
 xkb_symbols "art-mods" {
 
-    key <CAPS> {	[ Hyper_L, Hyper_L	]	};
+    key <CAPS> {	[ Hyper_L, ISO_Next_Group ] };
     key <NMLK> {	[ Num_Lock		]	};
     modifier_map none { Num_Lock, Meta_L, Meta_R, Alt_L, Alt_R };
-
+    
     key <LWIN> {	[ Meta_L, Meta_L ]	};
     key <LALT> {	[ Alt_L, Alt_L ]	};
     key <RALT> {	[ Super_R, Super_R ]	};
@@ -54,9 +40,6 @@ xkb_symbols "art-mods" {
     key <KIDN> { [ XF86KbdBrightnessDown ] };
     key <KIUP> { [ XF86KbdBrightnessUp ] };
 
-# Switch keyboard with two Shifts. The toggle direction depends on which one was pressed first
-    include "group(shifts_toggle)"
-
-# Multi-key is Right Control - Compose key
+#    include "group(shifts_toggle)"
     include "compose(rctrl)"
 };

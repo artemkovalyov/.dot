@@ -85,7 +85,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export PASSWORD_STORE_DIR=~/.password-store
 export EDITOR=nano
-export PATH=~/.cargo/bin:$PATH
+export PATH=~/.cargo/bin:~/.local/bin:$PATH
 
 alias above="~/.dot/scripts/xrandr.sh above"
 alias right="~/.dot/scripts/xrandr.sh right"
