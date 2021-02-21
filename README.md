@@ -11,3 +11,5 @@ My dirty .dot files and scripts
 - Shifts change the group - switching the languages
 - Right Control is Compose
 - OS level keyboard setup is disabled
+
+Thanks to [Chris Mutig](https://camuthig.dev/posts/remapping-linux-modifiers-with-xkb/)
