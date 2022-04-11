@@ -93,6 +93,8 @@ export NVM_DIR="$HOME/.nvm"
 export PASSWORD_STORE_DIR=~/.password-store
 export EDITOR=nano
 export PATH=~/.cargo/bin:~/.local/bin:$PATH
+export DENO_INSTALL="/home/artem/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
 alias above="~/.dot/scripts/xrandr.sh above"
 alias right="~/.dot/scripts/xrandr.sh right"
