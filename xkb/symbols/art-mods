@@ -2,11 +2,11 @@ default partial modifier_keys
 xkb_symbols "art-mods" {
 
     modifier_map none {Num_Lock, Meta_L, Meta_R, Alt_L, Alt_R, Super_L, Super_R, Hyper_L, Hyper_R };
-    
+
     key <CAPS> { [ Hyper_L, ISO_Next_Group ] };
     key <RCTL> { [ Multi_key, ISO_Level3_Shift ] };
     key <LWIN> { [ Meta_L ] };
-    key <LALT> { [ Alt_L ] };
+    key <LALT> { [ Alt_L, Alt_L ] };
     key <RALT> { [ Super_R ] };
 
     // Beginning of modifier mappings.
