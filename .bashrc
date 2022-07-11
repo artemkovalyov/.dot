@@ -95,6 +95,7 @@ export EDITOR=nano
 export PATH=~/.cargo/bin:~/.local/bin:$PATH
 export DENO_INSTALL="/home/artem/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+export LSP_USE_PLISTS=true
 
 alias above="~/.dot/scripts/xrandr.sh above"
 alias right="~/.dot/scripts/xrandr.sh right"
