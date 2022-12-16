@@ -1,12 +1,4 @@
-#
-# ~/.bashrc
-#
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
+#!/usr/bin/env bash
 
 # If not running interactively, don't do anything
 case $- in
@@ -21,6 +13,10 @@ export BASH_IT="/home/artem/.bash_it"
 # Leave empty to disable theming.
 # location /.bash_it/themes/
 export BASH_IT_THEME='bobby'
+
+# Some themes can show whether `sudo` has a current token or not.
+# Set `$THEME_CHECK_SUDO` to `true` to check every prompt:
+#THEME_CHECK_SUDO='true'
 
 # (Advanced): Change this to the name of your remote repo if you
 # cloned bash-it with a remote other than origin such as `bash-it`.
@@ -41,6 +37,9 @@ export IRC_CLIENT='irssi'
 
 # Set this to the command you use for todo.txt-cli
 export TODO="t"
+
+# Set this to the location of your work or project folders
+#BASH_IT_PROJECT_PATHS="${HOME}/Projects:/Volumes/work/src"
 
 # Set this to false to turn off version control status checking within the prompt for all themes
 export SCM_CHECK=true
@@ -88,20 +87,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Artem
-
-export PASSWORD_STORE_DIR=~/.password-store
+export VISUAL=nano
 export EDITOR=nano
-export PATH=~/.cargo/bin:~/.local/bin:$PATH
-export DENO_INSTALL="/home/artem/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
 export LSP_USE_PLISTS=true
-
-alias above="~/.dot/scripts/xrandr.sh above"
-alias right="~/.dot/scripts/xrandr.sh right"
-alias left="~/.dot/scripts/xrandr.sh left"
-alias below="~/.dot/scripts/xrandr.sh below"
-alias off="~/.dot/scripts/xrandr.sh off"
-alias clone="~/.dot/scripts/xrandr.sh clone"
-alias brc="source ~/.bashrc"
-alias venus="ssh venus"
