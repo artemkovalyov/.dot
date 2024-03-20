@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -79,6 +78,8 @@ export SCM_CHECK=true
 
 # Uncomment this to make Bash-it create alias reload.
 # export BASH_IT_RELOAD_LEGACY=1
+
+PATH=$HOME/.local/bin:$PATH
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
