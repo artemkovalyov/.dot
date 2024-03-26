@@ -6,7 +6,7 @@ case $- in
 esac
 
 # Path to the bash it configuration
-export BASH_IT="/home/artem/.bash_it"
+export BASH_IT="$HOME/.bash_it"
 
 # Lock and Load a custom theme file.
 # Leave empty to disable theming.
@@ -93,7 +93,7 @@ export EDITOR=nano
 
 # Load my keyboard configuration
 
-xkbcomp arty.xkb $DISPLAY
+xkbcomp $HOME/.dot/arty.xkb $DISPLAY
 
 #make sure LSP mode for Emacs compiles with fast PLIST processing
 export LSP_USE_PLISTS=true
