@@ -1445,14 +1445,14 @@ xkb_symbols "(unnamed)" {
         type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
         symbols[Group1]= [           comma,            less ],
         symbols[Group2]= [     Cyrillic_be,     Cyrillic_BE ],
-        symbols[Group3]= [     Cyrillic_be,     Cyrillic_BE,   guillemetleft, doublelowquotemark ]
+        symbols[Group3]= [     Cyrillic_be,     Cyrillic_BE,   NoSymbol, doublelowquotemark ]
     };
     key <AB09> {
         type[group2]= "ALPHABETIC",
         type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
         symbols[Group1]= [          period,         greater ],
         symbols[Group2]= [     Cyrillic_yu,     Cyrillic_YU ],
-        symbols[Group3]= [     Cyrillic_yu,     Cyrillic_YU,  guillemetright, leftdoublequotemark ]
+        symbols[Group3]= [     Cyrillic_yu,     Cyrillic_YU, NoSymbol, leftdoublequotemark ]
     };
     key <AB10> {
         type[group3]= "FOUR_LEVEL",
