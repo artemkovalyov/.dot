@@ -90,4 +90,10 @@ export NVM_DIR="$HOME/.nvm"
 
 export VISUAL=nano
 export EDITOR=nano
+
+# Load my keyboard configuration
+
+xkbcomp arty.xkb $DISPLAY
+
+#make sure LSP mode for Emacs compiles with fast PLIST processing
 export LSP_USE_PLISTS=true
