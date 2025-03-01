@@ -97,3 +97,7 @@ xkbcomp $HOME/.dot/arty.xkb $DISPLAY
 
 #make sure LSP mode for Emacs compiles with fast PLIST processing
 export LSP_USE_PLISTS=true
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
