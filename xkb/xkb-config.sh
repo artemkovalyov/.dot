@@ -23,6 +23,12 @@ RELOAD_XKB=false
 SEARCH_LINE_IN_FILES=false
 FORCE=false
 
+# Parse arguments
+if [ $# -eq 0 ]; then
+  SHOW_HELP=true
+fi
+
+
 for arg in "$@"; do
   case $arg in
     -copy)
@@ -37,16 +43,38 @@ for arg in "$@"; do
     --force)
       FORCE=true
       ;;
+    -help)
+      SHOW_HELP=true
+      ;;
     *)
       if [ "$SEARCH_LINE_IN_FILES" = true ]; then
         SEARCH_LINE="$arg"
       else
         echo "Unknown option: $arg"
-        exit 1
+        SHOW_HELP=true
       fi
       ;;
   esac
 done
+
+# Function to display help
+display_help() {
+  echo "Usage: $0 [options] [search_string]"
+  echo
+  echo "Options:"
+  echo "  -copy          Copy the specified files to their destinations"
+  echo "  -reload        Reload the XKB configuration with the art-mods option"
+  echo "  -search        Search for a specified line in the XKB rules directory"
+  echo "  --force        Force overwrite of existing files during copy"
+  echo "  -help          Display this help message"
+  echo
+  echo "Examples:"
+  echo "  $0 -copy"
+  echo "  $0 -reload"
+  echo "  $0 -search \"custom-line\""
+  echo "  $0 -copy --force"
+}
+
 
 # Function to copy file if it exists and destination file doesn't exist or force flag is set
 copy_if_exists() {
