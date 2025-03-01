@@ -29,6 +29,8 @@ if [ $# -eq 0 ]; then
 fi
 
 
+
+
 for arg in "$@"; do
   case $arg in
     -copy)
@@ -74,6 +76,13 @@ display_help() {
   echo "  $0 -search \"custom-line\""
   echo "  $0 -copy --force"
 }
+
+
+# Display help if requested or no parameters are given
+if [ "$SHOW_HELP" = true ]; then
+  display_help
+  exit 0
+fi
 
 
 # Function to copy file if it exists and destination file doesn't exist or force flag is set
