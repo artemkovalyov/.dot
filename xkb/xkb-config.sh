@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Define file paths
-ARTY_MODS_SRC="./symbols/art-mods"
+ARTY_MODS_SRC="$HOME/.dot/xkb/symbols/art-mods"
 ARTY_MODS_DEST="/usr/share/X11/xkb/symbols/art-mods"
-EVDEV_LST_SRC="./rules/evdev.lst"
+EVDEV_LST_SRC="$HOME/.dot/xkb/rules/evdev.lst"
 EVDEV_LST_DEST="/usr/share/X11/xkb/rules/evdev.lst"
-EVDEV_XML_SRC="./rules/evdev.xml"
+EVDEV_XML_SRC="$HOME/.dot/xkb/rules/evdev.xml"
 EVDEV_XML_DEST="/usr/share/X11/xkb/rules/evdev.xml"
-EVDEV_SRC="./rules/evdev"
+EVDEV_SRC="$HOME/.dot/xkb/rules/evdev"
 EVDEV_DEST="/usr/share/X11/xkb/rules/evdev"
 
 
@@ -27,9 +27,6 @@ FORCE=false
 if [ $# -eq 0 ]; then
   SHOW_HELP=true
 fi
-
-
-
 
 for arg in "$@"; do
   case $arg in
