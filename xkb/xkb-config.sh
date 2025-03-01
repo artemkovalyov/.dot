@@ -124,9 +124,11 @@ search_line_in_files() {
   local found=false
 
   for file in "$dir"/*; do
-    if grep -q "$line" "$file"; then
-      echo "Line '$line' found in $file"
-      found=true
+    if [ -f "$file" ]; then
+      if grep -q "$line" "$file"; then
+        echo "Line '$line' found in $file"
+        found=true
+      fi
     fi
   done
 
