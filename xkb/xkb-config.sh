@@ -18,6 +18,8 @@ SEARCH_LINE="art-mods"
 
 # Directory to scan
 RULES_DIR="/usr/share/X11/xkb/rules"
+KDE_CONFIG_DIR="$HOME/.config"
+
 
 # Parse arguments
 COPY_FILES=false
@@ -150,6 +152,8 @@ fi
 
 if [ "$SEARCH_LINE_IN_FILES" = true ]; then
   search_line_in_files "$SEARCH_LINE" "$RULES_DIR"
+  search_line_in_files "$SEARCH_LINE" "$KDE_CONFIG_DIR"
+
 fi
 
 echo "We are done here!"
