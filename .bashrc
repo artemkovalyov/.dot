@@ -93,7 +93,7 @@ export EDITOR=nano
 
 # Load my keyboard configuration
 
-xkbcomp $HOME/.dot/arty.xkb $DISPLAY
+# xkbcomp $HOME/.dot/arty.xkb $DISPLAY
 
 #make sure LSP mode for Emacs compiles with fast PLIST processing
 export LSP_USE_PLISTS=true
