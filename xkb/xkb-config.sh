@@ -7,8 +7,8 @@ EVDEV_LST_SRC="./rules/evdev.lst"
 EVDEV_LST_DEST="/usr/share/X11/xkb/rules/evdev.lst"
 EVDEV_XML_SRC="./rules/evdev.xml"
 EVDEV_XML_DEST="/usr/share/X11/xkb/rules/evdev.xml"
-EVDEV_XML_SRC="./rules/evdev"
-EVDEV_XML_DEST="/usr/share/X11/xkb/rules/evdev"
+EVDEV_SRC="./rules/evdev"
+EVDEV_DEST="/usr/share/X11/xkb/rules/evdev"
 
 
 # Parse arguments
@@ -25,7 +25,7 @@ copy_if_exists() {
     if [ -f "$dest" ] && [ "$FORCE" == false ]; then
       echo "Destination file $dest already exists. Use --force to overwrite."
     else
-      cp "$src" "$dest"
+      sudo cp "$src" "$dest"
       echo "Copied $src to $dest"
     fi
   else
@@ -37,6 +37,8 @@ copy_if_exists() {
 copy_if_exists "$ARTY_MODS_SRC" "$ARTY_MODS_DEST"
 copy_if_exists "$EVDEV_LST_SRC" "$EVDEV_LST_DEST"
 copy_if_exists "$EVDEV_XML_SRC" "$EVDEV_XML_DEST"
+copy_if_exists "$EVDEV_SRC" "$EVDEV_DEST"
+
 
 # Reload XKB configuration
 setxkbmap -option arty-mods
