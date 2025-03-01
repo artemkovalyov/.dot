@@ -85,7 +85,22 @@ fi
 
 
 # Function to copy file if it exists and destination file doesn't exist or force flag is set
-copy_if_exists() {
+copy_if_exists_root() {
+  local src=$1
+  local dest=$2
+  if [ -f "$src" ]; then
+    if [ -f "$dest" ] && [ "$FORCE" == false ]; then
+      echo "Destination file $dest already exists. Use --force to overwrite."
+    else
+      sudo cp "$src" "$dest"
+      echo "Copied $src to $dest"
+    fi
+  else
+    echo "File $src does not exist"
+  fi
+}
+
+copy_if_exists_user() {
   local src=$1
   local dest=$2
   if [ -f "$src" ]; then
@@ -120,11 +135,11 @@ search_line_in_files() {
 
 # Copy files
 if [ "$COPY_FILES" = true ]; then
-copy_if_exists "$ARTY_MODS_SRC" "$ARTY_MODS_DEST"
-copy_if_exists "$EVDEV_LST_SRC" "$EVDEV_LST_DEST"
-copy_if_exists "$EVDEV_XML_SRC" "$EVDEV_XML_DEST"
-copy_if_exists "$EVDEV_SRC" "$EVDEV_DEST"
-copy_if_exists "$KDE_KBD_SRC" "$KDE_KBD_DEST"
+copy_if_exists_root "$ARTY_MODS_SRC" "$ARTY_MODS_DEST"
+copy_if_exists_root "$EVDEV_LST_SRC" "$EVDEV_LST_DEST"
+copy_if_exists_root "$EVDEV_XML_SRC" "$EVDEV_XML_DEST"
+copy_if_exists_root "$EVDEV_SRC" "$EVDEV_DEST"
+copy_if_exists_user "$KDE_KBD_SRC" "$KDE_KBD_DEST"
 
 fi
 
