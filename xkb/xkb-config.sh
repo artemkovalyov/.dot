@@ -1,12 +1,15 @@
 #!/bin/bash
 
 # Define file paths
-ARTY_MODS_SRC="path/to/arty-mods"
-ARTY_MODS_DEST="/usr/lib/X11/xkb/symbols/arty-mods"
-EVDEV_LST_SRC="path/to/evdev.lst"
+ARTY_MODS_SRC="./symbols/art-mods"
+ARTY_MODS_DEST="/usr/share/X11/xkb/symbols/art-mods"
+EVDEV_LST_SRC="./rules/evdev.lst"
 EVDEV_LST_DEST="/usr/share/X11/xkb/rules/evdev.lst"
-EVDEV_XML_SRC="path/to/evdev.xml"
+EVDEV_XML_SRC="./rules/evdev.xml"
 EVDEV_XML_DEST="/usr/share/X11/xkb/rules/evdev.xml"
+EVDEV_XML_SRC="./rules/evdev"
+EVDEV_XML_DEST="/usr/share/X11/xkb/rules/evdev"
+
 
 # Parse arguments
 FORCE=false
@@ -36,6 +39,6 @@ copy_if_exists "$EVDEV_LST_SRC" "$EVDEV_LST_DEST"
 copy_if_exists "$EVDEV_XML_SRC" "$EVDEV_XML_DEST"
 
 # Reload XKB configuration
-setxkbmap -layout us
+setxkbmap -option arty-mods
 
 echo "XKB configuration reloaded"
