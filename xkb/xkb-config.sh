@@ -9,6 +9,8 @@ EVDEV_XML_SRC="$HOME/.dot/xkb/rules/evdev.xml"
 EVDEV_XML_DEST="/usr/share/X11/xkb/rules/evdev.xml"
 EVDEV_SRC="$HOME/.dot/xkb/rules/evdev"
 EVDEV_DEST="/usr/share/X11/xkb/rules/evdev"
+KDE_KBD_SRC="$HOME/.dot/xkb/.config/kxkbrc"
+KDE_KBD_DEST="$HOME/.config/kxkbrc"
 
 
 # Default line to search for
@@ -122,6 +124,8 @@ copy_if_exists "$ARTY_MODS_SRC" "$ARTY_MODS_DEST"
 copy_if_exists "$EVDEV_LST_SRC" "$EVDEV_LST_DEST"
 copy_if_exists "$EVDEV_XML_SRC" "$EVDEV_XML_DEST"
 copy_if_exists "$EVDEV_SRC" "$EVDEV_DEST"
+copy_if_exists "$KDE_KBD_SRC" "$KDE_KBD_DEST"
+
 fi
 
 if [ "$RELOAD_XKB" = true ]; then
