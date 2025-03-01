@@ -11,11 +11,42 @@ EVDEV_SRC="./rules/evdev"
 EVDEV_DEST="/usr/share/X11/xkb/rules/evdev"
 
 
+# Default line to search for
+SEARCH_LINE="art-mods"
+
+# Directory to scan
+RULES_DIR="/usr/share/X11/xkb/rules"
+
 # Parse arguments
+COPY_FILES=false
+RELOAD_XKB=false
+SEARCH_LINE_IN_FILES=false
 FORCE=false
-if [ "$1" == "--force" ]; then
-  FORCE=true
-fi
+
+for arg in "$@"; do
+  case $arg in
+    -copy)
+      COPY_FILES=true
+      ;;
+    -reload)
+      RELOAD_XKB=true
+      ;;
+    -search)
+      SEARCH_LINE_IN_FILES=true
+      ;;
+    --force)
+      FORCE=true
+      ;;
+    *)
+      if [ "$SEARCH_LINE_IN_FILES" = true ]; then
+        SEARCH_LINE="$arg"
+      else
+        echo "Unknown option: $arg"
+        exit 1
+      fi
+      ;;
+  esac
+done
 
 # Function to copy file if it exists and destination file doesn't exist or force flag is set
 copy_if_exists() {
@@ -33,14 +64,39 @@ copy_if_exists() {
   fi
 }
 
+# Function to search for the line in files
+search_line_in_files() {
+  local line=$1
+  local dir=$2
+  local found=false
+
+  for file in "$dir"/*; do
+    if grep -q "$line" "$file"; then
+      echo "Line '$line' found in $file"
+      found=true
+    fi
+  done
+
+  if [ "$found" = false ]; then
+    echo "Line '$line' not found in any files in $dir"
+  fi
+}
+
 # Copy files
+if [ "$COPY_FILES" = true ]; then
 copy_if_exists "$ARTY_MODS_SRC" "$ARTY_MODS_DEST"
 copy_if_exists "$EVDEV_LST_SRC" "$EVDEV_LST_DEST"
 copy_if_exists "$EVDEV_XML_SRC" "$EVDEV_XML_DEST"
 copy_if_exists "$EVDEV_SRC" "$EVDEV_DEST"
+fi
 
+if [ "$RELOAD_XKB" = true ]; then
+  setxkbmap -option arty-mods
+  echo "XKB configuration reloaded with art-mods option"
+fi
 
-# Reload XKB configuration
-setxkbmap -option arty-mods
+if [ "$SEARCH_LINE_IN_FILES" = true ]; then
+  search_line_in_files "$SEARCH_LINE" "$RULES_DIR"
+fi
 
-echo "XKB configuration reloaded"
+echo "We are done here!"
