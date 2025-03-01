@@ -41,6 +41,6 @@ copy_if_exists "$EVDEV_SRC" "$EVDEV_DEST"
 
 
 # Reload XKB configuration
-setxkbmap -option arty-mods
+setxkbmap -option art-mods
 
 echo "XKB configuration reloaded"
