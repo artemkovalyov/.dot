@@ -38,7 +38,7 @@ function pure_prompt() {
   local ps_user="${bold_yellow?}\u${normal?}"
   local ps_user_mark="${green?}\$${normal?}"
   local ps_root="${red?}\u${red?}"
-  local ps_root_mark="${red?}\#${normal?}"
+  local ps_root_mark="${red?}#${normal?}"
   local ps_path="${bold_green?}\w\n${normal?}"
   local virtualenv_prompt scm_prompt
   virtualenv_prompt="$(virtualenv_prompt)"
