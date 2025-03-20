@@ -3,7 +3,7 @@
 
 # scm theming
 SCM_THEME_PROMPT_PREFIX="|"
-SCM_THEME_PROMPT_SUFFIX=""
+SCM_THEME_PROMPT_SUFFIX="|"
 
 SCM_THEME_PROMPT_DIRTY=" ${bold_red?}✗${normal?}"
 SCM_THEME_PROMPT_CLEAN=" ${green?}✓${normal?}"
