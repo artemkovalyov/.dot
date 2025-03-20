@@ -36,23 +36,21 @@ function custom_scm_char() {
 function pure_prompt() {
   local ps_host="${bold_yellow?}\h${normal?}"
   local ps_user="${bold_yellow?}\u${normal?}"
-  local ps_user_mark="${green?}\$${normal?}"
   local ps_root="${red?}\u${red?}"
-  local ps_root_mark="${red?}\#${normal?}"
   local ps_path="${bold_green?}\w\n${normal?}"
   local virtualenv_prompt scm_prompt
   virtualenv_prompt="$(virtualenv_prompt)"
   scm_prompt="$(scm_prompt)"
 
-  # make it work
-  case "${EUID:-$UID}" in
-    0)
-      ps_user_mark="${ps_root_mark}"
-      ps_user="${ps_root}"
-      ;;
-  esac
-
-  PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:${ps_path}$(custom_scm_char)${ps_user_mark} → "
+# In your pure_prompt function, replace the PS1 line with:
+case "${EUID:-$UID}" in
+  0)
+    PS1="${virtualenv_prompt}${ps_root}${bold_yellow?}@${normal?}${ps_host}:${ps_path}$(custom_scm_char)${red?}\#${normal?} → "
+    ;;
+  *)
+    PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:${ps_path}$(custom_scm_char)${green?}\$${normal?} → "
+    ;;
+esac
 }
 
 safe_append_prompt_command pure_prompt
