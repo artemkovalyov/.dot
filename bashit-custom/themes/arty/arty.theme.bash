@@ -37,7 +37,7 @@ function pure_prompt() {
   local ps_host="${bold_yellow?}\h${normal?}"
   local ps_user="${bold_yellow?}\u${normal?}"
   local ps_root="${red?}\u${red?}"
-  local ps_path="${bold_green?}\w\n${normal?}"
+  local ps_path="${bold_green?}\w${normal?}"
   local virtualenv_prompt scm_prompt
   virtualenv_prompt="$(virtualenv_prompt)"
   scm_prompt="$(scm_prompt)"
@@ -45,10 +45,10 @@ function pure_prompt() {
 # In your pure_prompt function, replace the PS1 line with:
 case "${EUID:-$UID}" in
   0)
-    PS1="${virtualenv_prompt}${ps_root}${bold_yellow?}@${normal?}${ps_host}:${ps_path}$(custom_scm_char)${red?}\#${normal?} → "
+    PS1="${virtualenv_prompt}${ps_root}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${red?}#${normal?} → "
     ;;
   *)
-    PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:${ps_path}$(custom_scm_char)${green?}\$${normal?} → "
+    PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:\n${ps_path}\n$(custom_scm_char)${green?}\$${normal?} → "
     ;;
 esac
 }
