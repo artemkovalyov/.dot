@@ -48,7 +48,7 @@ case "${EUID:-$UID}" in
     PS1="${virtualenv_prompt}${ps_root}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${red?}#${normal?} → "
     ;;
   *)
-    PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:\n${ps_path}\n$(custom_scm_char)${green?}\$${normal?} → "
+    PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${green?}\$${normal?} → "
     ;;
 esac
 }
