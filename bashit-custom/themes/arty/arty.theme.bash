@@ -25,32 +25,29 @@ VIRTUALENV_THEME_PROMPT_SUFFIX=")"
 
 function custom_scm_char() {
   result=$(scm_prompt_char_info)
-  # Check if the result is just a circle
   if [[ "$result" == "○" ]]; then
     echo ""
   else
-    echo "${result}"
+    echo "$result"
   fi
 }
 
 function pure_prompt() {
   local ps_host="${bold_yellow?}\h${normal?}"
   local ps_user="${bold_yellow?}\u${normal?}"
-  local ps_root="${red?}\u${red?}"
+  local ps_root="${red?}\u${normal?}"
   local ps_path="${bold_green?}\w${normal?}"
-  local virtualenv_prompt scm_prompt
+  local virtualenv_prompt
   virtualenv_prompt="$(virtualenv_prompt)"
-  scm_prompt="$(scm_prompt)"
 
-# In your pure_prompt function, replace the PS1 line with:
-case "${EUID:-$UID}" in
-  0)
-    PS1="${virtualenv_prompt}${ps_root}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${red?}#${normal?} → "
-    ;;
-  *)
-    PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${green?}\$${normal?} → "
-    ;;
-esac
+  case "${EUID:-$UID}" in
+    0)
+      PS1="${virtualenv_prompt}${ps_root}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${red?}#${normal?} → "
+      ;;
+    *)
+      PS1="${virtualenv_prompt}${ps_user}${bold_yellow?}@${normal?}${ps_host}:${ps_path}\n$(custom_scm_char)${green?}\$${normal?} → "
+      ;;
+  esac
 }
 
 safe_append_prompt_command pure_prompt
