@@ -1,134 +1,41 @@
 #!/bin/bash
+set -e
 
-# Define file paths
-ARTY_MODS_SRC="$HOME/.dot/xkb/symbols/art-mods"
-EVDEV_LST_SRC="$HOME/.dot/xkb/rules/evdev.lst"
-EVDEV_XML_SRC="$HOME/.dot/xkb/rules/evdev.xml"
-EVDEV_SRC="$HOME/.dot/xkb/rules/evdev"
-KDE_KBD_SRC="$HOME/.dot/xkb/.config/kxkbrc"
-
-# Wayland destinations (user-level, no sudo)
-ARTY_MODS_WL="$HOME/.config/xkb/symbols/art-mods"
-EVDEV_LST_WL="$HOME/.config/xkb/rules/evdev.lst"
-EVDEV_XML_WL="$HOME/.config/xkb/rules/evdev.xml"
-EVDEV_WL="$HOME/.config/xkb/rules/evdev"
-
-KDE_KBD_DEST="$HOME/.config/kxkbrc"
-
-# Default line to search for
-SEARCH_LINE="art-mods"
-
-# Directory to scan
-RULES_DIR_WL="$HOME/.config/xkb/rules"
-KDE_CONFIG_DIR="$HOME/.config"
-
-# Parse arguments
-COPY_WAYLAND=false
-RELOAD_XKB=false
-SEARCH_LINE_IN_FILES=false
+SRC="$HOME/.dot/xkb"
+XKB_DEST="$HOME/.config/xkb"
 FORCE=false
-SHOW_HELP=false
 
-if [ $# -eq 0 ]; then
-  SHOW_HELP=true
-fi
+usage() {
+  echo "Usage: $0 [-f]"
+  echo "  Install XKB and KDE keyboard config for Wayland."
+  echo "  -f  Overwrite existing files"
+  exit 0
+}
 
 for arg in "$@"; do
   case $arg in
-    -copy-wayland|-copy)
-      COPY_WAYLAND=true
-      ;;
-    -reload)
-      RELOAD_XKB=true
-      ;;
-    -search)
-      SEARCH_LINE_IN_FILES=true
-      ;;
-    --force)
-      FORCE=true
-      ;;
-    -help)
-      SHOW_HELP=true
-      ;;
-    *)
-      if [ "$SEARCH_LINE_IN_FILES" = true ]; then
-        SEARCH_LINE="$arg"
-      else
-        echo "Unknown option: $arg"
-        SHOW_HELP=true
-      fi
-      ;;
+    -f|--force) FORCE=true ;;
+    -h|--help)  usage ;;
+    *) echo "Unknown option: $arg"; usage ;;
   esac
 done
 
-display_help() {
-  echo "Usage: $0 [options] [search_string]"
-  echo
-  echo "Options:"
-  echo "  -copy            Copy files to ~/.config/xkb (Wayland)"
-  echo "  -reload          Reload XKB via setxkbmap"
-  echo "  -search          Search for a string in XKB rules directories"
-  echo "  --force          Overwrite existing files"
-  echo "  -help            Display this help message"
-  echo
-  echo "Examples:"
-  echo "  $0 -copy"
-  echo "  $0 -copy --force"
-  echo "  $0 -search \"art-mods\""
-}
-
-if [ "$SHOW_HELP" = true ]; then
-  display_help
-  exit 0
-fi
-
-copy_user() {
-  local src=$1
-  local dest=$2
-  if [ ! -f "$src" ]; then
-    echo "Source file $src does not exist"
+install_file() {
+  local src=$1 dest=$2
+  if [ -f "$dest" ] && [ "$FORCE" = false ]; then
+    echo "Skipping $dest (use -f to overwrite)"
     return
   fi
-  if [ -f "$dest" ] && [ "$FORCE" = false ]; then
-    echo "Destination $dest already exists. Use --force to overwrite."
-  else
-    cp "$src" "$dest"
-    echo "Copied $src to $dest"
-  fi
+  cp "$src" "$dest"
+  echo "Installed $dest"
 }
 
-search_line_in_files() {
-  local line=$1
-  local dir=$2
-  local found=false
-  for file in "$dir"/*; do
-    if [ -f "$file" ] && grep -q "$line" "$file"; then
-      echo "Found '$line' in $file"
-      found=true
-    fi
-  done
-  if [ "$found" = false ]; then
-    echo "'$line' not found in any files in $dir"
-  fi
-}
+mkdir -p "$XKB_DEST/symbols" "$XKB_DEST/rules"
 
-if [ "$COPY_WAYLAND" = true ]; then
-  mkdir -p "$HOME/.config/xkb/symbols" "$HOME/.config/xkb/rules"
-  copy_user "$ARTY_MODS_SRC" "$ARTY_MODS_WL"
-  copy_user "$EVDEV_LST_SRC" "$EVDEV_LST_WL"
-  copy_user "$EVDEV_XML_SRC" "$EVDEV_XML_WL"
-  copy_user "$EVDEV_SRC"     "$EVDEV_WL"
-  copy_user "$KDE_KBD_SRC"   "$KDE_KBD_DEST"
-fi
+install_file "$SRC/symbols/art-mods"  "$XKB_DEST/symbols/art-mods"
+install_file "$SRC/rules/evdev"       "$XKB_DEST/rules/evdev"
+install_file "$SRC/rules/evdev.lst"   "$XKB_DEST/rules/evdev.lst"
+install_file "$SRC/rules/evdev.xml"   "$XKB_DEST/rules/evdev.xml"
+install_file "$SRC/.config/kxkbrc"   "$HOME/.config/kxkbrc"
 
-if [ "$RELOAD_XKB" = true ]; then
-  setxkbmap -option art-mods
-  echo "XKB configuration reloaded with art-mods option"
-fi
-
-if [ "$SEARCH_LINE_IN_FILES" = true ]; then
-  search_line_in_files "$SEARCH_LINE" "$RULES_DIR_WL"
-  search_line_in_files "$SEARCH_LINE" "$KDE_CONFIG_DIR"
-fi
-
-echo "Done!"
+echo "Done! Log out and back in to apply."
