@@ -1,7 +1,8 @@
 From c4fc16120d30317a42e34b5363340f6649dce76f Mon Sep 17 00:00:00 2001
 From: Artem Kovalov <artem.kovalyov@gmail.com>
 Date: Fri, 23 Oct 2026 14:42:55 +0200
-Subject: [PATCH] pgtk: split GDK_MOD1_MASK and GDK_META_MASK modifier handling
+Subject: [PATCH 1/2] pgtk: split GDK_MOD1_MASK and GDK_META_MASK modifier
+ handling
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

@@ -1,0 +1,34 @@
+From a808693f375c9de59123ea0ac3ee39d7bdbbab6c Mon Sep 17 00:00:00 2001
+From: Artem Kovalov <artem.kovalyov@gmail.com>
+Date: Fri, 23 Oct 2026 15:28:29 +0200
+Subject: [PATCH 2/2] pgtk: map GDK_MOD3_MASK to hyper modifier
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+CapsLock mapped to Hyper_L on Mod3 in XKB sends GDK_MOD3_MASK on
+Wayland/pgtk, but this mask was not handled — the Hyper modifier was
+silently dropped. GDK_HYPER_MASK is only set when GDK itself recognises
+the keysym as Hyper, which doesn't happen reliably on all compositors.
+
+Map GDK_MOD3_MASK → mod_hyper so CapsLock-based Hyper bindings work.
+---
+ src/pgtkterm.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/pgtkterm.c b/src/pgtkterm.c
+index a5d8c0f..b24d42b 100644
+--- a/src/pgtkterm.c
++++ b/src/pgtkterm.c
+@@ -5132,6 +5132,8 @@ pgtk_gtk_to_emacs_modifiers (struct pgtk_display_info *dpyinfo, int state)
+     mod |= mod_alt;
+   if (state & GDK_MOD2_MASK)
+     mod |= mod_meta;
++  if (state & GDK_MOD3_MASK)
++    mod |= mod_hyper;
+   if (state & GDK_SUPER_MASK)
+     mod |= mod_super;
+   if (state & GDK_HYPER_MASK)
+-- 
+2.53.0
+
