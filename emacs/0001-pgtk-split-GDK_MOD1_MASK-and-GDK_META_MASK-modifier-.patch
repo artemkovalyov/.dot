@@ -1,0 +1,50 @@
+From c4fc16120d30317a42e34b5363340f6649dce76f Mon Sep 17 00:00:00 2001
+From: Artem Kovalov <artem.kovalyov@gmail.com>
+Date: Fri, 23 Oct 2026 14:42:55 +0200
+Subject: [PATCH] pgtk: split GDK_MOD1_MASK and GDK_META_MASK modifier handling
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Previously both GDK_MOD1_MASK (Alt_L) and GDK_META_MASK were mapped to
+mod_meta, making it impossible to use Alt as a distinct Emacs modifier
+(A-) separate from Meta (M-).
+
+Split them so GDK_MOD1_MASK maps to mod_alt and GDK_META_MASK maps to
+mod_meta. Also add GDK_MOD2_MASK → mod_meta for keyboards where Meta_L
+(LWin) is on Mod2. Update the reverse mapping accordingly.
+
+This allows x-alt-keysym/x-meta-keysym to work as intended on pgtk.
+---
+ src/pgtkterm.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/pgtkterm.c b/src/pgtkterm.c
+index 617ed3c..a5d8c0f 100644
+--- a/src/pgtkterm.c
++++ b/src/pgtkterm.c
+@@ -5126,7 +5126,11 @@ pgtk_gtk_to_emacs_modifiers (struct pgtk_display_info *dpyinfo, int state)
+     mod |= shift_modifier;
+   if (state & GDK_CONTROL_MASK)
+     mod |= mod_ctrl;
+-  if (state & GDK_META_MASK || state & GDK_MOD1_MASK)
++  if (state & GDK_META_MASK)
++    mod |= mod_meta;
++  if (state & GDK_MOD1_MASK)
++    mod |= mod_alt;
++  if (state & GDK_MOD2_MASK)
+     mod |= mod_meta;
+   if (state & GDK_SUPER_MASK)
+     mod |= mod_super;
+@@ -5159,6 +5163,8 @@ pgtk_emacs_to_gtk_modifiers (struct pgtk_display_info *dpyinfo, int state)
+   if (state & mod_ctrl)
+     mask |= GDK_CONTROL_MASK;
+   if (state & mod_meta)
++    mask |= GDK_META_MASK;
++  if (state & mod_alt)
+     mask |= GDK_MOD1_MASK;
+   return mask;
+ }
+-- 
+2.53.0
+

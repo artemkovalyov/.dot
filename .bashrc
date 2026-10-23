@@ -101,3 +101,24 @@ export LSP_USE_PLISTS=true
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
+
+# Add to ~/.bashrc
+export TERM=xterm-256color
+export PAGER=cat
+# Simple prompt for VSCode
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    PS1='\u@\h:\w\$ '
+fi
+
+
+export LANG="en_US.UTF-8"
+export LC_NUMERIC="C"
+export LC_TIME="C"
+export LC_COLLATE="C"
+export LC_MONETARY="C"
+export LC_PAPER="C"
+export LC_NAME="C"
+export LC_ADDRESS="C"
+export LC_TELEPHONE="C"
+export LC_MEASUREMENT="C"
+. "$HOME/.cargo/env"
